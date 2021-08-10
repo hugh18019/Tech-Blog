@@ -21,19 +21,25 @@
   
   header {
     padding: 40px;
-    text-align: center;
+    text-align: left;
     background: var(--primary);
     color: var(--secondary);
     border-bottom-style: solid;
   }
   
+  .nav-link{
+    color: var(--quatrinary)
+  }
+
   main {
     display: flex;
     flex-wrap: wrap;
     flex-grow: 1;
   }
   
-  aside {
+
+
+  /* aside {
     flex: 0;
     background-color: var(--tertiary);
     padding: 80px;
@@ -162,5 +168,5 @@
     flex-flow: column wrap;
     align-content: flex-start;
     align-items: center;
-  }
+  } */
   
