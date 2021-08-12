@@ -26,6 +26,8 @@ UserPost.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'user',
+    modelName: 'user_post',
   }
 );
+
+module.exports = UserPost;

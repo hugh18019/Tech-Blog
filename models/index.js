@@ -1,5 +1,16 @@
-const { User, Post, UserPost } = require('../models');
+const User = require('./User');
+const Post = require('./Post');
+const UserPost = require('./UserPost');
 
+User.hasMany(Post, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
+
+Post.belongsTo(User, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
 User.belongsToMany(Post, {
   through: 'UserPost',
   foreignKey: 'user_id',
@@ -22,8 +33,4 @@ Post.hasMany(UserPost, {
   onDelete: 'CASCADE',
 });
 
-module.exports = {
-  User,
-  Post,
-  UserPost,
-};
+module.exports = User;
