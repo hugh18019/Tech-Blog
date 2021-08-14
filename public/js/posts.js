@@ -1,14 +1,18 @@
-var newPostBtn = document.querySelector('#new-post-btn');
+var createPostBtn = document.querySelector('#new-post-btn');
 var newPostArea = document.querySelector('#new-post');
 var newTitleEl = document.querySelector('#new-post-title');
 var newPostContentEl = document.querySelector('#new-post-content');
 
+var createCommentBtn = document.querySelector('#new-comment-btn');
+var newCommentArea = document.querySelector('#new-comment');
+var newCommmentContentEl = document.querySelector('#new-comment-content');
+
 // console.log(newTitle);
 // console.log(newPostContent);
 
-var dateTime = new Date().toLocaleString();
+// var dateTime = new Date().toLocaleString();
 
-function handleNewPostBtn() {
+function handleCreatePostBtn() {
   if (newPostArea.hidden === false) {
     newPostArea.hidden = true;
     console.log(newPostArea.hidden);
@@ -18,15 +22,7 @@ function handleNewPostBtn() {
   }
 }
 
-newPostBtn.addEventListener('click', handleNewPostBtn);
-
-document.addEventListener('mouseup', function (e) {
-  if (!newPostArea.contains(e.target) && !newPostBtn.contains(e.target)) {
-    newPostArea.hidden = true;
-  }
-});
-
-async function handleFormSubmit(event) {
+async function handlePostSubmit(event) {
   event.preventDefault();
 
   var newTitle = newTitleEl.value.trim();
@@ -37,8 +33,9 @@ async function handleFormSubmit(event) {
     body: JSON.stringify({
       title: `${newTitle}`,
       content: `${newPostContent}`,
+      // Should user_id from req.session
       user_id: 1,
-      date_posted: `${dateTime}`,
+      date_posted: `${new Date().toLocaleString()}`,
     }),
     headers: { 'Content-Type': 'application/json' },
   });
@@ -49,4 +46,24 @@ async function handleFormSubmit(event) {
   }
 }
 
-newPostArea.addEventListener('submit', handleFormSubmit);
+function handleCreateComment() {
+  console.log('got here');
+  if (newCommentArea.hidden === false) {
+    newCommentArea.hidden = true;
+  } else {
+    newCommentArea.hidden = false;
+  }
+}
+
+createPostBtn.addEventListener('click', handleCreatePostBtn);
+
+document.addEventListener('mouseup', function (e) {
+  if (!newPostArea.contains(e.target) && !createPostBtn.contains(e.target)) {
+    newPostArea.hidden = true;
+  }
+});
+
+newPostArea.addEventListener('submit', handlePostSubmit);
+
+createCommentBtn.addEventListener('click', handleCreateComment);
+// newCommentArea.addEventListener('submit', handle);

@@ -16,7 +16,19 @@
     {{#each posts as |post|}}
     {{>post-details}}
     <button>like</button>
-    <button>comment</buttoN>
+    <section>
+            <button id="new-comment-btn">comment</button>
+            <form class="row g-3" id="new-comment" hidden>
+                <div>
+                    <label for="comment" class="form-label">Example comment</label>
+                    <textarea class="form-control" id="new-comment-content" rows="3"></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+    </section>
+
     {{/each}}
 </section>
 <script src="/js/posts.js"></script>
