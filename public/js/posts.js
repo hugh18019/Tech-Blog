@@ -75,7 +75,7 @@ async function handleCommentSubmit(event) {
       //should use req.session.post_id
       post_id: 1,
     }),
-    headers: { 'Content-Type:': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
   });
 
   if (response.ok) {
