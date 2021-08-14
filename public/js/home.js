@@ -7,7 +7,7 @@ async function getPosts() {
   });
 
   if (response.ok) {
-    // document.location.replace('/api/posts');
+    document.location.replace('/api/posts');
     console.log('Sucessfully retrieved posts');
   } else {
     console.log('Failed to retrieve posts');
