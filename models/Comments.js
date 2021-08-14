@@ -11,6 +11,9 @@ Comment.init(
       autoIncrement: true,
       allowNull: false,
     },
+    comment_content: {
+      type: DataTypes.STRING,
+    },
     post_id: {
       type: DataTypes.INTEGER,
       references: {
