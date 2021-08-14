@@ -1,3 +1,6 @@
 <section id='posts-area'>
-
+    {{#each posts as |post|}}
+    {{>post-details}}
+    {{/each}}
 </section>
+<script src='/js/home.js'></script>
