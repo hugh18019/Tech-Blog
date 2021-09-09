@@ -3,9 +3,9 @@ var newPostArea = document.querySelector('#new-post');
 var newTitleEl = document.querySelector('#new-post-title');
 var newPostContentEl = document.querySelector('#new-post-content');
 
-var showCommentAreaBtn = document.querySelector('#new-comment-btn');
-var newCommentArea = document.querySelector('#new-comment');
-var newCommmentContentEl = document.querySelector('#new-comment-content');
+var showCommentAreaBtn = document.querySelector('.new-comment-btn');
+var newCommentArea = document.getElementsByClassName('comment-section');
+var newCommmentContentEl = document.querySelector('.new-comment-content');
 
 // console.log(newTitle);
 // console.log(newPostContent);
@@ -44,6 +44,9 @@ async function handlePostSubmit(event) {
   } else {
     console.log('Failed to post');
   }
+
+  newTitleEl.value = '';
+  newPostContentEl.value = '';
 }
 
 // Event listeners for posts
@@ -56,7 +59,7 @@ document.addEventListener('mouseup', function (e) {
 newPostArea.addEventListener('submit', handlePostSubmit);
 
 // Functions for comments
-function handleShowCommentArea() {
+function handleShowCommentArea(newCommentArea) {
   console.log('got here');
   if (newCommentArea.hidden === false) {
     newCommentArea.hidden = true;
@@ -86,5 +89,17 @@ async function handleCommentSubmit(event) {
 }
 
 // Event listeners for comments
-showCommentAreaBtn.addEventListener('click', handleShowCommentArea);
-newCommentArea.addEventListener('submit', handleCommentSubmit);
+// showCommentAreaBtn.addEventListener('click', handleShowCommentArea);
+// newCommentArea.addEventListener('submit', handleCommentSubmit);
+
+// console.log(newCommentArea);
+
+for (var each of newCommentArea) {
+  console.log(each.firstElementChild);
+  each.firstElementChild.addEventListener(
+    'click',
+    handleShowCommentArea(each.lastElementChild)
+  );
+  console.log(each.lastElementChild);
+  each.lastElementChild.addEventListener('submit', handleCommentSubmit);
+}
