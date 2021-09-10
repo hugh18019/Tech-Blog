@@ -1,6 +1,21 @@
 const router = require('express').Router();
 const { Post, User, Comment } = require('../../models');
 
+router.get('/:id', async (req, res) => {
+  try {
+    const commentData = await Comment.findOne({
+      post_id: req.params.id,
+    });
+
+    var comment = commentData.get({ plain: true });
+
+    res.status(200).json(comment);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 router.post('/', async (req, res) => {
   console.log('Arrived at comments routes');
   console.log('req.body', req.body);

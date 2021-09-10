@@ -14,6 +14,7 @@ var showCommentAreaBtn = $('.new-comment-btn');
 var newCommentSection = $('.comment-section');
 var newCommentContentEl = $('.new-comment-content');
 var newCommentForm = $('.new-comment-form');
+var getCommentBtn = $('.get-comment-btn');
 
 // console.log(newTitle);
 // console.log(newPostContent);
@@ -150,5 +151,21 @@ async function handleCommentSubmit(event) {
 //   }
 // });
 
+async function handleGetComments(e) {
+  const postId = $(e.target).parent()[0].id;
+
+  const response = await fetch('comments/:postId', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (response.ok) {
+    console.log('Successfully retrieved comments');
+  } else {
+    console.log('Failed to retrieve comments');
+  }
+}
+
 postsContainer.on('click', '.new-comment-btn', handleShowCommentArea);
 postsContainer.on('click', '.submit-comment-btn', handleCommentSubmit);
+postsContainer.on('click', '.get-comment-btn', handleGetComments);
