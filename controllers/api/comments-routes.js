@@ -3,13 +3,15 @@ const { Post, User, Comment } = require('../../models');
 
 router.get('/:id', async (req, res) => {
   try {
-    const commentData = await Comment.findOne({
-      post_id: req.params.id,
+    const commentData = await Comment.findAll({
+      where: {
+        post_id: req.params.id,
+      },
     });
 
-    var comment = commentData.get({ plain: true });
+    const comments = commentData.map((comment) => comment.get({ plain: true }));
 
-    res.status(200).json(comment);
+    res.status(200).json(comments);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

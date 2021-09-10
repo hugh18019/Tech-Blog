@@ -31,6 +31,11 @@
 
             <button>like</button>
             <button class="get-comment-btn">See Comments</button>
+            <div>
+                {{#each post.comments as |comment|}}
+                {{>comment-details}}
+                {{/each}}
+            </div>
             <section class="comment-section">
                 <button class="new-comment-btn">Add Comment</button>
                 <form class="row g-3 new-comment-form" hidden>
