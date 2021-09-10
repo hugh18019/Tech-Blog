@@ -63,11 +63,25 @@ async function handlePostSubmit(event) {
 
 // Event listeners for posts
 showPostAreaBtn.addEventListener('click', handleShowPostArea);
+
+// Hide the new post form when the user clicks outside of it
 document.addEventListener('mouseup', function (e) {
   if (!newPostArea.contains(e.target) && !showPostAreaBtn.contains(e.target)) {
     newPostArea.hidden = true;
   }
 });
+
+// Hide the new comment form when the user clicks outside of it
+$(document).mouseup(function (e) {
+  console.log('got here');
+  if (
+    !newCommentForm.is(e.target) &&
+    newCommentForm.has(e.target).length === 0
+  ) {
+    newCommentForm[0].hidden = true;
+  }
+});
+
 newPostArea.addEventListener('submit', handlePostSubmit);
 
 // Functions for comments
