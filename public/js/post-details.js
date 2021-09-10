@@ -2,14 +2,22 @@ var showCommentAreaBtn = document.querySelector('#new-comment-btn');
 var newCommentArea = document.querySelector('#new-comment');
 var newCommmentContentEl = document.querySelector('#new-comment-content');
 
+console.log('showCommentAreaBtn', showCommentAreaBtn);
+console.log('newCommentArea', newCommentArea);
+console.log('newCommmentContentEl', newCommmentContentEl);
+
 // Functions for comments
 function handleShowCommentArea() {
   console.log('got here');
-  if (newCommentArea.hidden === false) {
-    newCommentArea.hidden = true;
-  } else {
-    newCommentArea.hidden = false;
-  }
+
+  newCommentArea.hidden = true;
+  // if (newCommentArea.hidden === false) {
+  //   newCommentArea.hidden = true;
+  //   console.log(newCommentArea.hidden);
+  // } else {
+  //   newCommentArea.hidden = false;
+  //   console.log(newCommentArea.hidden);
+  // }
 }
 
 async function handleCommentSubmit(event) {

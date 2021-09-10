@@ -13,22 +13,24 @@
             <button type="submit" class="btn btn-primary mb-3">Submit</button>
         </div>
     </form>
-    {{#each posts as |post|}}
-    {{>post-details}}
-    <button>like</button>
-    <section class="comment-section">
+    <div class="posts-container">
+        {{#each posts as |post|}}
+        {{>post-details}}
+        <button>like</button>
+        <section class="comment-section">
             <button class="new-comment-btn">comment</button>
-            <form class="row g-3" id="new-comment" hidden>
+            <form class="row g-3 new-comment-form" hidden>
                 <div>
                     <label for="comment" class="form-label">Example comment</label>
-                    <textarea class="form-control" class="new-comment-content" rows="3"></textarea>
+                    <textarea class="form-control new-comment-content" rows="3"></textarea>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
-    </section>
-
-    {{/each}}
+        </section>
+        {{/each}}
+    </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="/js/posts.js"></script>
