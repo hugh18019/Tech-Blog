@@ -2,6 +2,9 @@ const router = require('express').Router();
 const { Post, User, Comment } = require('../../models');
 
 router.post('/', async (req, res) => {
+  console.log('Arrived at comments routes');
+  console.log('req.body', req.body);
+
   try {
     const commentData = await Comment.create({
       comment_content: req.body.comment_content,

@@ -12,7 +12,7 @@ var postsContainer = $('.posts-container');
 
 var showCommentAreaBtn = $('.new-comment-btn');
 var newCommentSection = $('.comment-section');
-var newCommmentContentEl = $('.new-comment-content');
+var newCommentContentEl = $('.new-comment-content');
 var newCommentForm = $('.new-comment-form');
 
 // console.log(newTitle);
@@ -72,15 +72,6 @@ newPostArea.addEventListener('submit', handlePostSubmit);
 
 // Functions for comments
 function handleShowCommentArea(e) {
-  // console.log('got here');
-  // console.log('newCommentForm', newCommentForm);
-
-  // console.log('e.target', e.target);
-
-  // console.log($(e.target).siblings(0));
-
-  // $(e.target).siblings(0)[0].hidden = false;
-
   if ($(e.target).siblings(0)[0].hidden === false) {
     $(e.target).siblings(0)[0].hidden = true;
   } else {
@@ -90,7 +81,21 @@ function handleShowCommentArea(e) {
 
 async function handleCommentSubmit(event) {
   event.preventDefault();
-  var newCommentContent = newCommmentContentEl.value.trim();
+
+  // console.log(event.target);
+  // console.log(
+  //   $(event.target).parent().siblings().eq(0).children().eq(1)[0].value
+  // );
+  // console.log('newCommentContentEl', newCommentContentEl.value);
+
+  var newCommentContent = $(event.target)
+    .parent()
+    .siblings()
+    .eq(0)
+    .children()
+    .eq(1)[0]
+    .value.trim();
+
   const response = await fetch('/api/comments', {
     method: 'POST',
     body: JSON.stringify({
@@ -132,3 +137,4 @@ async function handleCommentSubmit(event) {
 // });
 
 postsContainer.on('click', '.new-comment-btn', handleShowCommentArea);
+postsContainer.on('click', '.submit-comment-btn', handleCommentSubmit);
