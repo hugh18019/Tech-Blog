@@ -11,10 +11,10 @@ var postsContainer = $('.posts-container');
 // var newCommentForm = document.querySelector('.new-comment-form');
 
 var showCommentAreaBtn = $('.new-comment-btn');
-var newCommentSection = $('.comment-section');
+var newCommentSection = $('.create-comment-section');
 var newCommentContentEl = $('.new-comment-content');
 var newCommentForm = $('.new-comment-form');
-var getCommentBtn = $('.get-comment-btn');
+var seeCommentBtn = $('.see-comment-btn');
 
 // console.log(newTitle);
 // console.log(newPostContent);
@@ -77,7 +77,8 @@ $(document).mouseup(function (e) {
   console.log('got here');
   if (
     !newCommentForm.is(e.target) &&
-    newCommentForm.has(e.target).length === 0
+    newCommentForm.has(e.target).length === 0 &&
+    !showCommentAreaBtn.is(e.target)
   ) {
     newCommentForm[0].hidden = true;
   }
@@ -86,11 +87,22 @@ $(document).mouseup(function (e) {
 newPostArea.addEventListener('submit', handlePostSubmit);
 
 // Functions for comments
-function handleShowCommentArea(e) {
-  if ($(e.target).siblings(0)[0].hidden === false) {
-    $(e.target).siblings(0)[0].hidden = true;
+function handleShowAddCommentArea(e) {
+  // console.log(
+  //   '$(e.target).siblings(0)[0].hidden',
+  //   $(e.target).siblings(0)[0].hidden
+  // );
+
+  console.log($(e.target).siblings().eq(0)[0].hidden);
+
+  if ($(e.target).siblings().eq(0)[0].hidden === false) {
+    // console.log('$(e.target).siblings(0)[0].hidden is currently false');
+
+    $(e.target).siblings().eq(0)[0].hidden = true;
   } else {
-    $(e.target).siblings(0)[0].hidden = false;
+    // console.log('$(e.target).siblings(0)[0].hidden is currently true');
+    console.log('here');
+    $(e.target).siblings().eq(0)[0].hidden = false;
   }
 }
 
@@ -128,44 +140,25 @@ async function handleCommentSubmit(event) {
   }
 }
 
-// Event listeners for comments
-// showCommentAreaBtn.addEventListener('click', handleShowCommentArea);
-// newCommentForm.addEventListener('submit', handleCommentSubmit);
+// async function handleGetComments(e) {
+//   const postId = $(e.target).parent()[0].id;
 
-// console.log('newCommentArea', newCommentArea);
+//   const response = await fetch('comments/:postId', {
+//     method: 'GET',
+//     headers: { 'Content-Type': 'application/json' },
+//   });
 
-// for (var each of newCommentSection) {
-//   console.log('each.lastElementChild', each.lastElementChild);
-//   each.firstElementChild.addEventListener(
-//     'click',
-//     handleShowCommentArea(each.lastElementChild)
-//   );
-//   console.log(each.lastElementChild);
-//   each.lastElementChild.addEventListener('submit', handleCommentSubmit);
+//   if (response.ok) {
+//     console.log('Successfully retrieved comments');
+//   } else {
+//     console.log('Failed to retrieve comments');
+//   }
 // }
 
-// postsContainer.addEventListener('click', (event) => {
-//   if (event.target.className === 'new-comment-btn') {
-//     // handleShowCommentArea();
-//     console.log(event.target.parent);
-//   }
-// });
-
-async function handleGetComments(e) {
-  const postId = $(e.target).parent()[0].id;
-
-  const response = await fetch('comments/:postId', {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  });
-
-  if (response.ok) {
-    console.log('Successfully retrieved comments');
-  } else {
-    console.log('Failed to retrieve comments');
-  }
+function handleSeeComments(e) {
+  $(e.target).siblings().eq(2)[0].hidden = false;
 }
 
-postsContainer.on('click', '.new-comment-btn', handleShowCommentArea);
+postsContainer.on('click', '.new-comment-btn', handleShowAddCommentArea);
 postsContainer.on('click', '.submit-comment-btn', handleCommentSubmit);
-postsContainer.on('click', '.get-comment-btn', handleGetComments);
+postsContainer.on('click', '.see-comment-btn', handleSeeComments);
