@@ -35,6 +35,11 @@ document.addEventListener('mouseup', function (e) {
     commentContainer.css("visibility", "hidden");
     commentContainer.hide()
   }
+
+  if (!newCommentForm.is(e.target) && !addCommentBtn.is(e.target)) {
+    newCommentForm.css("visibility", "hidden");
+    newCommentForm.hide();
+  }
 });
 
 
@@ -120,14 +125,20 @@ function handleShowAddCommentArea(e) {
 
   console.log($(e.target).siblings().eq(0)[0].hidden);
 
-  if ($(e.target).siblings().eq(0)[0].hidden === false) {
+  const newCommentForm = $(e.target).siblings().eq(0)[0];
+
+
+  if ($(newCommentForm).css("visibility") == "visible") {
     // console.log('$(e.target).siblings(0)[0].hidden is currently false');
 
-    $(e.target).siblings().eq(0)[0].hidden = true;
+    $(newCommentForm).css("visibility", "hidden");
+    $(newCommentForm).hide();
+
   } else {
     // console.log('$(e.target).siblings(0)[0].hidden is currently true');
     console.log('here');
-    $(e.target).siblings().eq(0)[0].hidden = false;
+    $(newCommentForm).css("visibility", "visible");
+    $(newCommentForm).show();
   }
 }
 
