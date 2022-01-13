@@ -11,8 +11,6 @@ router.get('/', async (req, res) => {
 
     const posts = postData.map((post) => post.get({ plain: true }));
 
-    console.log('posts', posts);
-
     res.render('posts', { posts: posts });
   } catch (err) {
     console.log(err);
@@ -29,14 +27,34 @@ router.post('/', async (req, res) => {
       date_posted: req.body.date_posted,
     });
 
-    const post = postData.get({ plain: true });
+    // const postId = postData.dataValues.id;
 
-    res.status(200).json(post);
+    res.status(200).json(postData);
+
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
+
+router.put('/like', async (req, res) => {
+
+  console.log( 'req.body', req.body );
+
+  try {
+
+    const postData = await Post.increment(
+      { likes: +1 },
+      { where: { id: req.body.postId } }
+    );
+
+    res.status(200).json(postData);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+})
 
 router.delete(':id', async (req, res) => {
   try {

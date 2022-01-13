@@ -15,10 +15,10 @@
     </form>
     <div class="posts-container">
         {{#each posts as |post|}}
-        <div id={{id}}>
+        <div index={{id}}>
             {{>post-details}}
 
-            <button class="like-btn">like</button>
+            <button class="like-btn">like: {{likes}}</button>
             <button class="see-comment-btn">See Comments</button>
             <div class="comment-container" hidden>
                 {{#each post.comments as |comment|}}

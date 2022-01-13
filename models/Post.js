@@ -27,7 +27,7 @@ Post.init(
     },
     likes: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     date_posted: {
       type: DataTypes.DATE,
