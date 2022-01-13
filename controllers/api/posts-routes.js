@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
       include: [{ model: Comment }],
     });
 
-    // console.log('postData', postData);
+    console.log('postData', postData);
 
     const posts = postData.map((post) => post.get({ plain: true }));
 
@@ -47,6 +47,8 @@ router.put('/like', async (req, res) => {
       { likes: +1 },
       { where: { id: req.body.postId } }
     );
+
+    console.log( 'postData', postData );
 
     res.status(200).json(postData);
 

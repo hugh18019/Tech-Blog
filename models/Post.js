@@ -27,7 +27,7 @@ Post.init(
     },
     likes: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      defaultValue: 0
     },
     date_posted: {
       type: DataTypes.DATE,
@@ -43,3 +43,4 @@ Post.init(
 );
 
 module.exports = Post;
+

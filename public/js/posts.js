@@ -18,9 +18,45 @@ var newCommentForm = $('.new-comment-form');
 var seeCommentBtn = $('.see-comment-btn');
 var likeBtn = $('.like-btn');
 
+
+//////////////////////////////////////////////////////////////////////////////// Event Listeners ////////////////////////////////////////////////////////////////////////
 likeBtn.click(handleLike); 
 
+// Event listeners for posts
+showPostAreaBtn.addEventListener('click', handleShowPostArea);
 
+// Hide the new post form when the user clicks outside of it
+document.addEventListener('mouseup', function (e) {
+  if (!newPostArea.contains(e.target) && !showPostAreaBtn.contains(e.target)) {
+    newPostArea.hidden = true;
+  }
+
+  if (!commentContainer.is(e.target) && !seeCommentBtn.is(e.target)) {
+    commentContainer.css("visibility", "hidden");
+    commentContainer.hide()
+  }
+});
+
+
+// seeCommentBtn.click(function (e) {
+//   console.log('got here');
+//   console.log( 'commentContainer.css("visibility")', commentContainer.css("visibility") );
+
+//   // console.log( 'commentContainer.text()', $(commentContainer).text());
+
+//   if (commentContainer.css("visibility") == "visible") {
+//     commentContainer.css("visibility", "hidden");
+//     commentContainer.hide();
+//   }
+//   else {
+//     commentContainer.css("visibility", "visible");
+//     commentContainer.show();
+//   }
+
+// })
+
+
+newPostArea.addEventListener('submit', handlePostSubmit);
 
 function handleShowPostArea() {
   // console.log('got here');
@@ -33,6 +69,15 @@ function handleShowPostArea() {
     console.log(newPostArea.hidden);
   }
 }
+
+postsContainer.on('click', '.add-comment-btn', handleShowAddCommentArea);
+postsContainer.on('click', '.submit-comment-btn', handleCommentSubmit);
+postsContainer.on('click', '.see-comment-btn', handleSeeComments);
+// postsContainer.on('click', 'add-comment-btn', hand)
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////// Handlers ////////////////////////////////////////////////////////////
 
 async function handlePostSubmit(event) {
   event.preventDefault();
@@ -67,57 +112,11 @@ async function handlePostSubmit(event) {
   handleShowPostArea();
 }
 
-// Event listeners for posts
-showPostAreaBtn.addEventListener('click', handleShowPostArea);
 
-// Hide the new post form when the user clicks outside of it
-document.addEventListener('mouseup', function (e) {
-  if (!newPostArea.contains(e.target) && !showPostAreaBtn.contains(e.target)) {
-    newPostArea.hidden = true;
-  }
-
-  if (!commentContainer.is(e.target) && !seeCommentBtn.is(e.target)) {
-    commentContainer.css("visibility", "hidden");
-    commentContainer.hide()
-  }
-});
-
-// Hide the new comment form when the user clicks outside of it
-// $(document).mouseup(function (e) {
-//   if (
-//     newCommentForm[0] && 
-//     !newCommentForm.is(e.target) &&
-//     newCommentForm.has(e.target).length === 0 &&
-//     !addCommentBtn.is(e.target)
-//   ) {
-//     newCommentForm[0].hidden = true;
-//   }
-// });
-
-seeCommentBtn.click(function (e) {
-  console.log('got here');
-  console.log( 'commentContainer.css("visibility")', commentContainer.css("visibility") );
-
-  if (commentContainer.css("visibility") == "visible") {
-    commentContainer.css("visibility", "hidden");
-    commentContainer.hide();
-  }
-  else {
-    commentContainer.css("visibility", "visible");
-    commentContainer.show();
-  }
-
-})
-
-
-newPostArea.addEventListener('submit', handlePostSubmit);
 
 // Functions for comments
 function handleShowAddCommentArea(e) {
-  // console.log(
-  //   '$(e.target).siblings(0)[0].hidden',
-  //   $(e.target).siblings(0)[0].hidden
-  // );
+
 
   console.log($(e.target).siblings().eq(0)[0].hidden);
 
@@ -135,6 +134,9 @@ function handleShowAddCommentArea(e) {
 async function handleCommentSubmit(event) {
   event.preventDefault();
 
+  const postId = $(event.target).parent().parent()[0].attributes.index.value;
+
+
   var newCommentContent = $(event.target)
     .parent()
     .siblings()
@@ -148,7 +150,7 @@ async function handleCommentSubmit(event) {
     body: JSON.stringify({
       comment_content: `${newCommentContent}`,
       //should use req.session.post_id
-      post_id: 1,
+      post_id: postId,
     }),
     headers: { 'Content-Type': 'application/json' },
   });
@@ -161,12 +163,25 @@ async function handleCommentSubmit(event) {
 }
 
 function handleSeeComments(e) {
-  $(e.target).siblings().eq(2)[0].hidden = false;
+  // $(e.target).siblings().eq(2)[0].hidden = false;
+
+  console.log( '$(e.target).siblings().eq(2)[0]', $(e.target).siblings().eq(2)[0] );
+
+  var commentContainer = $(e.target).siblings().eq(2)[0];
+
+  console.log('got here');
+  console.log( 'commentContainer.css("visibility")', $(commentContainer).css("visibility") );
+
+  if ($(commentContainer).css("visibility") == "visible") {
+    $(commentContainer).css("visibility", "hidden");
+    $(commentContainer).hide();
+  }
+  else {
+    $(commentContainer).css("visibility", "visible");
+    $(commentContainer).show();
+  }
 }
 
-postsContainer.on('click', '.new-comment-btn', handleShowAddCommentArea);
-postsContainer.on('click', '.submit-comment-btn', handleCommentSubmit);
-postsContainer.on('click', '.see-comment-btn', handleSeeComments);
 
 async function handleLike(e) {
   console.log( "e.target", e.target );
@@ -174,15 +189,19 @@ async function handleLike(e) {
   // The id of the post to like is in the post's html index
   const postId = $(e.target).parent()[0].attributes.index.value;
 
+  console.log('postId', postId);
+
   const response = await fetch('/api/posts/like', {
     method: 'PUT',
     body: JSON.stringify({ postId }),
     headers: { 'Content-Type': 'application/json' }
   })
 
-  // const data = await response.json();
+  const data = await response.json();
 
-  // console.log( "data", data[0][1] );
+  console.log('data', data);
+
+  console.log( "data[0][1]", data[0][1] );
 
   // console.log( "e.target.value",$(e.target).text() );
 

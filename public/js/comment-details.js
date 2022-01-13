@@ -1,0 +1,3 @@
+function handleGetComments(e) {
+    
+}
