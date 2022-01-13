@@ -10,6 +10,9 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store); //st
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+
+
+
 const sess = {
   secret: 'Super secret secret',
   cookie: { maxAge: 1000 * 60 * 10 }, //cookie timer is 10 minutes (60000 ms)

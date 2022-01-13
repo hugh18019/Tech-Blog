@@ -5,6 +5,8 @@ const postdata = [
   {
     title: 'post title1',
     content: 'post content1',
+    user_id: 1,
+    likes: 0,
     date_posted: '2021-08-12 04:05:02',
   },
 ];

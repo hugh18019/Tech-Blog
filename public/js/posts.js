@@ -5,22 +5,22 @@ var newPostContentEl = document.querySelector('#new-post-content');
 
 var postsContainer = $('.posts-container');
 
-// var showCommentAreaBtn = document.querySelector('.new-comment-btn');
+// var addCommentBtn = document.querySelector('.new-comment-btn');
 // var newCommentSection = document.querySelectorAll('.comment-section');
 // var newCommmentContentEl = document.querySelector('.new-comment-content');
 // var newCommentForm = document.querySelector('.new-comment-form');
 
-var showCommentAreaBtn = $('.new-comment-btn');
+var commentContainer = $('.comment-container');
+var addCommentBtn = $('.add-comment-btn');
 var newCommentSection = $('.create-comment-section');
 var newCommentContentEl = $('.new-comment-content');
 var newCommentForm = $('.new-comment-form');
 var seeCommentBtn = $('.see-comment-btn');
+var likeBtn = $('.like-btn');
 
-// console.log(newTitle);
-// console.log(newPostContent);
-// console.log('newCommentArea', newCommentArea);
+// likeBtn.addEventListener('click', handleLikePost); 
 
-// var dateTime = new Date().toLocaleString();
+
 
 function handleShowPostArea() {
   // console.log('got here');
@@ -39,6 +39,9 @@ async function handlePostSubmit(event) {
 
   var newTitle = newTitleEl.value.trim();
   var newPostContent = newPostContentEl.value.trim();
+
+  console.log( 'newTitle', newTitle );
+  console.log( "newPostContent", newPostContent );
 
   const response = await fetch('/api/posts', {
     method: 'POST',
@@ -70,19 +73,40 @@ document.addEventListener('mouseup', function (e) {
   if (!newPostArea.contains(e.target) && !showPostAreaBtn.contains(e.target)) {
     newPostArea.hidden = true;
   }
+
+  if (!commentContainer.is(e.target) && !seeCommentBtn.is(e.target)) {
+    commentContainer.css("visibility", "hidden");
+    commentContainer.hide()
+  }
 });
 
 // Hide the new comment form when the user clicks outside of it
-$(document).mouseup(function (e) {
+// $(document).mouseup(function (e) {
+//   if (
+//     newCommentForm[0] && 
+//     !newCommentForm.is(e.target) &&
+//     newCommentForm.has(e.target).length === 0 &&
+//     !addCommentBtn.is(e.target)
+//   ) {
+//     newCommentForm[0].hidden = true;
+//   }
+// });
+
+seeCommentBtn.click(function (e) {
   console.log('got here');
-  if (
-    !newCommentForm.is(e.target) &&
-    newCommentForm.has(e.target).length === 0 &&
-    !showCommentAreaBtn.is(e.target)
-  ) {
-    newCommentForm[0].hidden = true;
+  console.log( 'commentContainer.css("visibility")', commentContainer.css("visibility") );
+
+  if (commentContainer.css("visibility") == "visible") {
+    commentContainer.css("visibility", "hidden");
+    commentContainer.hide();
   }
-});
+  else {
+    commentContainer.css("visibility", "visible");
+    commentContainer.show();
+  }
+
+})
+
 
 newPostArea.addEventListener('submit', handlePostSubmit);
 

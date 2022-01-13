@@ -18,13 +18,17 @@ Post.init(
     content: {
       type: DataTypes.STRING,
     },
-    // user_id: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'user',
-    //     key: 'id',
-    //   },
-    // },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
+    likes: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     date_posted: {
       type: DataTypes.DATE,
     },
