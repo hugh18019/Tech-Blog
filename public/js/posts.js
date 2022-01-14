@@ -36,7 +36,8 @@ document.addEventListener('mouseup', function (e) {
     commentContainer.hide()
   }
 
-  if (!newCommentForm.is(e.target) && !addCommentBtn.is(e.target)) {
+  if (!newCommentForm.is(e.target) && !addCommentBtn.is(e.target)
+        && !newCommentForm.has(e.target).length) {
     newCommentForm.css("visibility", "hidden");
     newCommentForm.hide();
   }
@@ -108,6 +109,7 @@ async function handlePostSubmit(event) {
 
   if (response.ok) {
     console.log('Successfully posted');
+    document.location.replace('/posts');
   } else {
     console.log('Failed to post');
   }
@@ -168,6 +170,7 @@ async function handleCommentSubmit(event) {
 
   if (response.ok) {
     console.log('Successfully posted new comment');
+    document.location.replace('/posts');
   } else {
     console.log('Failed to posst new comment');
   }
@@ -221,6 +224,7 @@ async function handleLike(e) {
 
   if (response.ok) {
     console.log( 'Successfully liked the post' );
+    document.location.replace('/posts');
   }
   else {
     console.log( 'Failed to post' );

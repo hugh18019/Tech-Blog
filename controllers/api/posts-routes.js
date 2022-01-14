@@ -3,13 +3,28 @@ const { Post, User, UserPost, Comment } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {
-    const postData = await Post.findAll({
-      include: [{ model: Comment }],
-    });
 
-    console.log('postData', postData);
 
-    const posts = postData.map((post) => post.get({ plain: true }));
+    console.log( 'hit api/posts' );
+    console.log( 'req', req.session.logged_in );
+
+
+
+      const postData = await Post.findAll(
+        { include: [{ model: Comment }] },
+      );
+
+      // console.log('postData', postData);
+
+      const posts = postData.map((post) => post.get({ plain: true }));
+
+      console.log( 'posts', posts );
+
+      // res.render( 'posts', { posts: posts } );
+
+      res.status(200).json(postData);
+
+
 
   } catch (err) {
     console.log(err);

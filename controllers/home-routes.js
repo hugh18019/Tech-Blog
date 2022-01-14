@@ -3,7 +3,7 @@ const { User } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
-  res.render('home');
+  res.render('home', { logged_in: req.session.logged_in });
 });
 
 router.get('/login', (req, res) => {
@@ -20,5 +20,10 @@ router.get('/signup', (req, res) => {
 
   res.render('signup');
 })
+
+router.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+})
+
 
 module.exports = router;

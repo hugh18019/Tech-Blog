@@ -20,13 +20,29 @@
         </h1>
         <ul class='nav'>
           <li class='nav-item'>
-            <a class='nav-link'>Home</a>
+            <a 
+              class='nav-link'
+              href='/'
+              tabindex="-1"
+              aria-disabled="true"
+              id="home"
+            >
+              Home
+            </a>
           </li>
           <li class='nav-item'>
-            <a class='nav-link'>Dashboard</a>
+            <a 
+              class='nav-link'
+              href='/dashboard'
+              tabindex="-1"
+              aria-disabled="true"
+              id='dashboard'
+            >
+              Dashboard
+            </a>
           </li>
           <li class='nav-item'>
-            {{#if loggedIn}}
+            {{#if logged_in}}
               <a
                 class='nav-link'
                 tabindex='-1'
@@ -63,6 +79,10 @@
         {{{body}}}
       </main>
     </div>
+
+    {{#if logged_in}}
+      <script src='/js/logout.js'></script>
+    {{/if}}
   </body>
 
 </html>
