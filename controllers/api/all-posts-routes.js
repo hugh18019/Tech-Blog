@@ -8,8 +8,6 @@ router.get('/', async (req, res) => {
     console.log( 'hit api/posts' );
     console.log( 'req', req.session.logged_in );
 
-
-
       const postData = await Post.findAll(
         { include: [{ model: Comment }] },
       );
@@ -18,10 +16,10 @@ router.get('/', async (req, res) => {
 
       const posts = postData.map((post) => post.get({ plain: true }));
 
-      // res.render( 'posts', { posts: posts } );
 
-      res.status(200).json(postData);
+      // res.status(200).json(postData);
 
+      res.render('allPosts', { posts: posts });
 
 
   } catch (err) {

@@ -1,0 +1,20 @@
+<section>
+    <div>These are the latest posts:</div>
+    {{#each posts as |post| }}
+        {{>post-details}}
+        <button class="see-likes-btn">Likes: {{post.likes}}</button>
+        <button class="see-comments-btn">See Comments</button>
+        <div class="comment-container">
+            {{#each post.comments as |comment| }}
+                {{>comment-details}}
+            {{/each}}
+
+
+        </div>
+
+
+
+    {{/each}}
+
+
+</section>
