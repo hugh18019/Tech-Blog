@@ -20,11 +20,45 @@ router.get('/', async (req, res) => {
             res.render( 'posts', {posts: posts});
 
     }
-    // else {
-    //     res.render( 'login' );
-    // }
+    else {
+        res.render( 'login' );
+    }
 
 })
+
+// router.put('/like', async (req, res) => {
+
+//     try {
+  
+//       const postData = await Post.increment(
+//         { likes: +1 },
+//         { where: { id: req.body.postId } }
+//       );
+  
+//       res.status(200).json(postData);
+  
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).json(err);
+//     }
+//   })
+  
+//   router.delete(':id', async (req, res) => {
+//     try {
+//       const postData = await Post.destroy({
+//         where: {
+//           id: req.params.id,
+//         },
+//       });
+  
+//       res.status(200).json(postData);
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).json(err);
+//     }
+//   });
+  
+
 
 module.exports = router;
 

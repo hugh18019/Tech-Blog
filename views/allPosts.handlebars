@@ -1,20 +1,31 @@
 <section>
     <div>These are the latest posts:</div>
-    {{#each posts as |post| }}
-        {{>post-details}}
-        <button class="see-likes-btn">Likes: {{post.likes}}</button>
-        <button class="see-comments-btn">See Comments</button>
-        <div class="comment-container">
-            {{#each post.comments as |comment| }}
-                {{>comment-details}}
-            {{/each}}
+    <div id='posts-container'>
+        {{#each posts as |post| }}
+            {{>post-details}}
+            <div>
+                <button class="see-likes-btn">Likes: {{post.likes}}</button>
+                <button class="see-comments-btn">See Comments</button>
+                <div class="comment-container" style="visibility: hidden; display:none;">
+
+                    {{#if posts.comments.length}}
+                        {{#each post.comments as |comment| }}
+                            {{>comment-details}}
+                        {{/each}}
+                    {{else}}
+                        <div>
+                            No comments
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
 
 
-        </div>
 
-
-
-    {{/each}}
+        {{/each}}
+    </div>
 
 
 </section>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="/js/allPosts.js"/>

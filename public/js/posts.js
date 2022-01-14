@@ -205,7 +205,7 @@ async function handleLike(e) {
 
   console.log('postId', postId);
 
-  const response = await fetch('/api/posts/like', {
+  const response = await fetch('/api/allPosts/like', {
     method: 'PUT',
     body: JSON.stringify({ postId }),
     headers: { 'Content-Type': 'application/json' }

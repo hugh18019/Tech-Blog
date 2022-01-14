@@ -49,7 +49,6 @@ router.post('/', async (req, res) => {
 
 router.put('/like', async (req, res) => {
 
-
   try {
 
     const postData = await Post.increment(
