@@ -11,7 +11,6 @@ router.get('/', async (req, res) => {
 
     const posts = postData.map((post) => post.get({ plain: true }));
 
-    res.render('posts', { posts: posts });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -47,8 +46,6 @@ router.put('/like', async (req, res) => {
       { likes: +1 },
       { where: { id: req.body.postId } }
     );
-
-    console.log( 'postData', postData );
 
     res.status(200).json(postData);
 

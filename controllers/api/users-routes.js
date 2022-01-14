@@ -1,6 +1,40 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
+
+router.post('/signup', async (req, res) => {
+
+  console.log( 'req.body.email', req.body.email );
+  console.log( 'req.body.password', req.body.password );
+
+  try {
+    const userData = await User.create({
+        email: req.body.email, 
+        password: req.body.password 
+      })
+
+      if ( !userData ) {
+        res
+          .status(400)
+          .json({ message: 'There was an error creating a new user' });
+        return;
+      }
+
+      console.log( 'userData', userData );
+
+          // Create session variables based on the logged in user
+      req.session.save(() => {
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
+        
+        res.json({ user: userData, message: 'You are now signed up!' });
+      });
+  }
+  catch ( err ) {
+    res.status(400).json(err);
+  }
+})
+
 router.post('/login', async (req, res) => {
   try {
     // Find the user who matches the posted e-mail address
