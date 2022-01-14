@@ -91,7 +91,7 @@ async function handlePostSubmit(event) {
   var newTitle = newTitleEl.value.trim();
   var newPostContent = newPostContentEl.value.trim();
 
-  const response = await fetch('/api/posts', {
+  const response = await fetch('/api/allPosts', {
     method: 'POST',
     body: JSON.stringify({
       title: `${newTitle}`,
