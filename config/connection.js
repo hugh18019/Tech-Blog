@@ -1,5 +1,6 @@
-const Sequelize = require('sequelize');
 require('dotenv').config();
+const Sequelize = require('sequelize');
+
 
 // Override timezone formatting
 Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
@@ -10,13 +11,11 @@ Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
   return date.format('YYYY-MM-DD HH:mm:ss.SSS');
 };
 
-var sequelize;
+let sequelize
 
-if ( process.env.JAWSDB_URL ) {
-  sequelize = new Sequelize( process.env.JAWSDB_URL );
-}
-else {
-
+if (process.env.JAWSDB_URL) {
+  sequelize = new Sequelize(process.env.JAWSDB_URL);
+} else {
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -28,5 +27,4 @@ else {
     }
   );
 }
-
 module.exports = sequelize;
