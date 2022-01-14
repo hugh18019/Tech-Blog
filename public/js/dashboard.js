@@ -1,5 +1,5 @@
 async function getPosts() {
-  document.location.replace('/posts');
+  document.location.assign('/posts');
 }
 
 getPosts();

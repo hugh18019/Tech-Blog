@@ -21,8 +21,6 @@ router.post('/signup', async (req, res) => {
         return;
       }
 
-      console.log( 'userData', userData );
-
           // Create session variables based on the logged in user
       req.session.save(() => {
         req.session.user_id = userData.id;
@@ -38,7 +36,6 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res) => {
 
-  console.log( 'req.body', req.body );
 
   try {
     // Find the user who matches the posted e-mail address
@@ -65,8 +62,7 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      
-      // sessionStorage.setItem('logged_in', true);
+    
 
       res.json({ user: userData, message: 'You are now logged in!' });
     });
@@ -82,7 +78,6 @@ router.post('/logout', (req, res) => {
 
   if (req.session.logged_in) {
 
-    sessionStorage.setItem('logged_in', false);
     // Remove the session variables
     req.session.destroy(() => {
       res.status(204).end();

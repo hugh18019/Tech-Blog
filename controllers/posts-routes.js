@@ -4,8 +4,8 @@ const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
 
-    console.log( 'hit /posts');
-    console.log( req.session );
+    // console.log( 'hit /posts');
+    // console.log( req.session );
 
     if ( req.session.logged_in ) {
 
@@ -16,16 +16,13 @@ router.get('/', async (req, res) => {
 
             const posts = postData.map((post) => post.get({ plain: true }));
 
-            console.log ('posts', posts );
-
-            console.log('about to render posts page');
 
             res.render( 'posts', {posts: posts});
 
     }
-    else {
-        res.render( 'login' );
-    }
+    // else {
+    //     res.render( 'login' );
+    // }
 
 })
 

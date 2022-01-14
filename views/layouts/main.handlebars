@@ -21,11 +21,8 @@
         <ul class='nav'>
           <li class='nav-item'>
             <a 
-              class='nav-link'
+              class='nav-link active'
               href='/'
-              tabindex="-1"
-              aria-disabled="true"
-              id="home"
             >
               Home
             </a>
@@ -33,18 +30,16 @@
           <li class='nav-item'>
             <a 
               class='nav-link'
-              href='/dashboard'
-              tabindex="-1"
-              aria-disabled="true"
-              id='dashboard'
+              href='/posts'
             >
               Dashboard
             </a>
           </li>
           <li class='nav-item'>
-            {{#if logged_in}}
+            {{#if sess.logged_in}}
               <a
                 class='nav-link'
+                href='/logout'
                 tabindex='-1'
                 aria-disabled='true'
                 id='logout'
@@ -83,6 +78,8 @@
     {{#if logged_in}}
       <script src='/js/logout.js'></script>
     {{/if}}
+
+    <script src='/js/main.js'></script>
   </body>
 
 </html>

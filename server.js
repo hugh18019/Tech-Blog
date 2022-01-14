@@ -24,6 +24,13 @@ const sess = {
 };
 
 app.use(session(sess));
+app.use( function( req, res, next ) {
+  if (req.session.user) {
+    req.session.logged_in = true;
+  }
+  res.locals.sess = req.session;
+  next();
+})
 
 const hbs = exphbs.create({
   // layoutsDir: path.join(__dirname, 'views/layouts'),
