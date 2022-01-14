@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         { include: [{ model: Comment }] },
       );
 
-      // console.log('postData', postData);
+      console.log('postData', postData);
 
       const posts = postData.map((post) => post.get({ plain: true }));
 

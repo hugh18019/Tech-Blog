@@ -13,24 +13,19 @@
             <button type="submit" class="btn btn-primary mb-3">Submit</button>
         </div>
     </form>
-    <div class="posts-container">
+    <div class="posts-container ">
 
         {{#each posts as |post|}}
         <div index={{id}}>
             {{>post-details}}
 
             <button class="like-btn">like: {{likes}}</button>
-            <button class="see-comment-btn">See Comments</button>
+            <button class="see-comment-btn">Comments: {{post.comments.length}}</button>
             <div class="comment-container" style="visibility: hidden; display: none;">
-                {{#if posts.comments.length}}
                         {{#each post.comments as |comment| }}
                             {{>comment-details}}
                         {{/each}}
-                    {{else}}
-                        <div>
-                            No comments
-                        </div>
-                    {{/if}}
+
             </div>
             <section class="create-comment-section">
                 <button class="add-comment-btn">Add Comment</button>

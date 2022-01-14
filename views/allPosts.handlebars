@@ -5,18 +5,11 @@
             {{>post-details}}
             <div>
                 <button class="see-likes-btn">Likes: {{post.likes}}</button>
-                <button class="see-comments-btn">See Comments</button>
+                <button class="see-comments-btn">Comments: {{post.comments.length}}</button>
                 <div class="comment-container" style="visibility: hidden; display:none;">
-
-                    {{#if posts.comments.length}}
                         {{#each post.comments as |comment| }}
                             {{>comment-details}}
                         {{/each}}
-                    {{else}}
-                        <div>
-                            No comments
-                        </div>
-                    {{/if}}
                 </div>
             </div>
 
