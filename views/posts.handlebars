@@ -1,5 +1,5 @@
 <section>
-    <button class="mb-3" id="new-post-btn">Create a new post</button>
+    <button class="mb-1" id="new-post-btn">Create a new post</button>
     <form class="row g-3" id="new-post" hidden>
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
@@ -19,14 +19,16 @@
         <div index={{id}}>
             {{>post-details}}
 
+            <button class="edit-post-btn">Edit</button>
+            
             <button class="delete-post-btn">Delete</button>
             <button class="like-btn">like: {{likes}}</button>
             <button class="see-comment-btn">Comments: {{post.comments.length}}</button>
             <div class="comment-container" style="visibility: hidden; display: none;">
                         {{#each post.comments as |comment| }}
-                            {{>comment-details}}
+                            {{>comment-details }}
                         {{/each}}
-
+            
             </div>
             <section class="create-comment-section">
                 <button class="add-comment-btn">Add Comment</button>

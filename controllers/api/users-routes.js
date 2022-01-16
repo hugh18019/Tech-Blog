@@ -10,7 +10,7 @@ router.post('/signup', async (req, res) => {
 
   try {
     const userData = await User.create({
-        email: req.body.email, 
+        username: req.body.username, 
         password: req.body.password 
       })
 
@@ -24,6 +24,7 @@ router.post('/signup', async (req, res) => {
           // Create session variables based on the logged in user
       req.session.save(() => {
         req.session.user_id = userData.id;
+        req.session.username = userData.username;
         req.session.logged_in = true;
         
         res.json({ user: userData, message: 'You are now signed up!' });

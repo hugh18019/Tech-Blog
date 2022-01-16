@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { response } = require('express');
 const { Post, User, UserPost, Comment } = require('../../models');
 
 router.get('/', async (req, res) => {
@@ -28,6 +29,29 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+
+  // console.log('req.body', req.body);
+
+  try {
+    const postData = await Post.update({
+      title: req.body.title, 
+      content: req.body.content,
+      date_posted: req.body.date_posted
+    },
+      { where: { id: req.params.id } }
+    )
+
+    // console.log( 'postData', postData );
+
+    res.status(200).json(postData);
+  }
+  catch ( err ) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+})
+
 router.post('/', async (req, res) => {
   try {
     const postData = await Post.create({
@@ -47,14 +71,20 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/like', async (req, res) => {
+router.put('/like/:id', async (req, res) => {
+
+  console.log( 'hit api/allPosts/like' );
+  console.log('req.params', req.params );
+
 
   try {
 
     const postData = await Post.increment(
       { likes: +1 },
-      { where: { id: req.body.postId } }
+      { where: { id: req.params.id } }
     );
+
+    console.log( 'postData', postData );
 
     res.status(200).json(postData);
 

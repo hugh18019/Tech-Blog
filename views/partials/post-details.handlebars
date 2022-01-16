@@ -1,12 +1,26 @@
-<div id={{id}} class='post'>
+<div id={{id}} class='post mt-5'>
   <div class='post-title'>
     <h3>{{title}}</h3>
   </div>
-  <div>
-    <p>{{content}}</p>
-    <p>{{date_posted}}</p>
-  </div>
+
+  <p>{{content}}</p>
+  <p>{{date_posted}}</p>
 </div>
 
-{{!--
-<script src='/js/post-details.js'></script> --}}
+<form id={{id}} class="row g-3 mt-5" id="new-post" style="visibility: hidden; display: none;">
+        <div>This is the editing area</div>
+        <div class="mb-3">
+            <label for="title" class="form-label"></label>
+            <input class="form-control" id="new-post-title" placeholder="title">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label"></label>
+            <textarea class="form-control" id="new-post-content" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="update-post-btn btn-primary mb-3">Submit</button>
+        </div>
+</form>
+
+
+{{!-- <script src='/js/post.js'></script> --}}

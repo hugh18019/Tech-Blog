@@ -80,6 +80,8 @@ postsContainer.on('click', '.add-comment-btn', handleShowAddCommentArea);
 postsContainer.on('click', '.submit-comment-btn', handleCommentSubmit);
 postsContainer.on('click', '.see-comment-btn', handleSeeComments);
 postsContainer.on('click', '.delete-post-btn', handlePostDelete);
+postsContainer.on('click', '.edit-post-btn', handlePostEdit);
+postsContainer.on('click', '.update-post-btn', handlePostUpdate);
 
 
 
@@ -88,8 +90,12 @@ postsContainer.on('click', '.delete-post-btn', handlePostDelete);
 async function handlePostSubmit(event) {
   event.preventDefault();
 
-  var newTitle = newTitleEl.value.trim();
-  var newPostContent = newPostContentEl.value.trim();
+  console.log( 'event.target', event.target );
+  var newTitle = $($(event.target).children().eq(0)[0]).children().eq(1)[0].value.trim();
+  var newPostContent = $($(event.target).children().eq(1)[0]).children().eq(1)[0].value.trim();
+
+  console.log( newTitle );
+  console.log( newPostContent );
 
   const response = await fetch('/api/allPosts', {
     method: 'POST',
@@ -116,6 +122,89 @@ async function handlePostSubmit(event) {
   newPostContentEl.value = '';
   handleShowPostArea();
 }
+
+async function handlePostEdit(event) {
+  var postId = $(event.target).siblings().eq(0)[0].id;
+
+  toggleEditArea( event );
+
+}
+
+// Called by handlePostEdit()
+function toggleEditArea( event ) {
+
+  var post = $(event.target).siblings().eq(0)[0];
+  
+  var title = $($(post).children().eq(0)[0]).children()[0].innerHTML;
+  var content = $(post).children().eq(1)[0].innerHTML;
+
+  var form = $(event.target).siblings().eq(1)[0];
+
+  if ( $(form).css("visibility") == "hidden"  ) {
+    $(form).css("visibility", "visible");
+    $(form).show();
+    $(post).css("visibility", "hidden");
+    $(post).hide();
+  }
+  else if ( $(form).css("visibility") == "visible" ) {
+    $(post).css("visibility", "visible");
+    $(post).show();
+    $(form).css("visibility", "hidden");
+    $(form).hide();
+  }
+
+  $($(form).children().eq(1)).children().eq(1)[0].value = title;
+  $($(form).children().eq(2)).children().eq(1)[0].value = content;
+
+}
+
+
+async function handlePostUpdate( event ) {
+  event.preventDefault();
+
+  var postId = $($(event.target).parent()).parent()[0].id;
+
+  // console.log( 'postId', postId );
+
+
+  console.log( 'event.target', event.target );
+
+  var newTitle = $($($(event.target).parent()).siblings().eq(1)[0]).children().eq(1)[0].value.trim(); 
+  var newPostContent = $($($(event.target).parent()).siblings().eq(2)[0]).children().eq(1)[0].value.trim(); 
+
+  
+  // var newTitle = $($(event.target).children().eq(0)[0]).children().eq(1)[0].value.trim();
+  // var newPostContent = $($(event.target).children().eq(1)[0]).children().eq(1)[0].value.trim();
+
+  console.log( newTitle );
+  console.log( newPostContent );
+
+  const response = await fetch(`/api/allPosts/${postId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      title: `${newTitle}`,
+      content: `${newPostContent}`,
+      date_posted: `${new Date().toLocaleString()}`,
+    }),
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  const data = await response.json();
+
+  if (response.ok) {
+    console.log('Successfully edited');
+    document.location.replace('/posts');
+  } else {
+    console.log('Failed to edit');
+  }
+
+  newTitleEl.value = '';
+  newPostContentEl.value = '';
+  handleShowPostArea();
+}
+
+
+
 
 async function handlePostDelete(event) {
 
@@ -198,7 +287,7 @@ function handleSeeComments(e) {
 
   console.log( '$(e.target).siblings().eq(2)[0]', $(e.target).siblings().eq(2)[0] );
 
-  var commentContainer = $(e.target).siblings().eq(2)[0];
+  var commentContainer = $(e.target).siblings().eq(5)[0];
 
   console.log('got here');
   console.log( 'commentContainer.css("visibility")', $(commentContainer).css("visibility") );
@@ -217,14 +306,16 @@ function handleSeeComments(e) {
 async function handleLike(e) {
   console.log( "e.target", e.target );
 
+
+  console.log( $(e.target).siblings().eq(1)[0].id );
+
   // The id of the post to like is in the post's html index
-  const postId = $(e.target).parent()[0].attributes.index.value;
+  const postId = $(e.target).siblings().eq(1)[0].id;
 
   console.log('postId', postId);
 
-  const response = await fetch('/api/allPosts/like', {
+  const response = await fetch(`/api/allPosts/like/${postId}`, {
     method: 'PUT',
-    body: JSON.stringify({ postId }),
     headers: { 'Content-Type': 'application/json' }
   })
 
@@ -234,9 +325,6 @@ async function handleLike(e) {
 
   console.log( "data[0][1]", data[0][1] );
 
-  // console.log( "e.target.value",$(e.target).text() );
-
-  // $(e.target).html( "likes:" + `${data[0][1]}` );
 
 
   if (response.ok) {
