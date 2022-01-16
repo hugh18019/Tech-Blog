@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
     const postData = await Post.create({
       title: req.body.title,
       content: req.body.content,
-      user_id: req.body.user_id,
+      user_id: req.session.user_id,
       date_posted: req.body.date_posted,
     });
 
@@ -64,7 +64,10 @@ router.put('/like', async (req, res) => {
   }
 })
 
-router.delete(':id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
+
+  console.log( 'req.params.id', req.params.id );
+
   try {
     const postData = await Post.destroy({
       where: {

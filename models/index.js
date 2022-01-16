@@ -1,6 +1,6 @@
 const User = require('./User');
 const Post = require('./Post');
-const UserPost = require('./UserPost');
+// const UserPost = require('./UserPost');
 const Comment = require('./Comment');
 
 // User.belongsToMany(Post, {
@@ -45,4 +45,4 @@ Comment.belongsTo(User, {
   onDelete: 'Cascade'
 })
 
-module.exports = { User, Post, UserPost, Comment };
+module.exports = { User, Post, Comment };

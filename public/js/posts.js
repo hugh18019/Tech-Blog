@@ -79,7 +79,7 @@ function handleShowPostArea() {
 postsContainer.on('click', '.add-comment-btn', handleShowAddCommentArea);
 postsContainer.on('click', '.submit-comment-btn', handleCommentSubmit);
 postsContainer.on('click', '.see-comment-btn', handleSeeComments);
-// postsContainer.on('click', 'add-comment-btn', hand)
+postsContainer.on('click', '.delete-post-btn', handlePostDelete);
 
 
 
@@ -96,8 +96,6 @@ async function handlePostSubmit(event) {
     body: JSON.stringify({
       title: `${newTitle}`,
       content: `${newPostContent}`,
-      // Should get user_id from req.session
-      user_id: 1,
       date_posted: `${new Date().toLocaleString()}`,
     }),
     headers: { 'Content-Type': 'application/json' },
@@ -119,6 +117,25 @@ async function handlePostSubmit(event) {
   handleShowPostArea();
 }
 
+async function handlePostDelete(event) {
+
+  var postId = $(event.target).siblings().eq(0)[0].id;
+
+  console.log( 'postId', postId );
+
+  const response = await fetch(`/api/allPosts/${postId}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' }
+  })
+
+  if (response.ok) {
+    console.log('Successfully deleted post' );
+    document.location.replace('/posts');
+  } else {
+    console.log('Failed to post');
+  }
+
+}
 
 
 // Functions for comments
